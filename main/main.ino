@@ -33,23 +33,34 @@
 #define BLYNK_PRINT Serial
 
 /* Fill-in your Template ID (only if using Blynk.Cloud) */
-#define BLYNK_TEMPLATE_ID "TMPLRT7nwmg1"
+#define BLYNK_TEMPLATE_ID "TMPLt4xb5aOZ"
 #define BLYNK_DEVICE_NAME "Quickstart Template"
-#define BLYNK_AUTH_TOKEN "7lr8FV9YRhXPl2rF4iSZHjX5cxKjJcXI"
+#define BLYNK_AUTH_TOKEN "q8aek7zucOIf210wT6ypKdA_OmrZdD0Q"
 
 
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <BlynkSimpleEsp32.h>
 
+BlynkTimer timer;
+
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
-char auth[] = "7lr8FV9YRhXPl2rF4iSZHjX5cxKjJcXI";
+char auth[] = BLYNK_AUTH_TOKEN;
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
-char ssid[] = "BiofluxTest";
-char pass[] = "12345678";
+char ssid[] = "Le van xuan";
+char pass[] = "12121212";
+
+void myTimerEvent()
+{
+  // You can send any value at any time.
+  // Please don't send more that 10 values per second.
+  Blynk.virtualWrite(V0, millis() / 1000);
+  Serial.println("send data");
+  Serial.println(millis() / 1000);
+}
 
 void setup()
 {
@@ -57,9 +68,13 @@ void setup()
   Serial.begin(9600);
 
   Blynk.begin(auth, ssid, pass);
+
+  // Setup a function to be called every second
+  timer.setInterval(1000L, myTimerEvent);
 }
 
 void loop()
 {
   Blynk.run();
+  timer.run(); // Initiates BlynkTimer
 }
