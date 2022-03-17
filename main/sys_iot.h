@@ -10,17 +10,17 @@
  * @example    None
  */
 
-/* Includes ----------------------------------------------------------- */
-#include <WiFi.h>
-#include <WiFiClient.h>
-#include <BlynkSimpleEsp32.h>
-
 /* Private defines ---------------------------------------------------- */
 #define BLYNK_PRINT Serial
 
 #define BLYNK_TEMPLATE_ID "TMPLt4xb5aOZ"
 #define BLYNK_DEVICE_NAME "Quickstart Template"
 #define BLYNK_AUTH_TOKEN  "q8aek7zucOIf210wT6ypKdA_OmrZdD0Q"
+
+/* Includes ----------------------------------------------------------- */
+#include <WiFi.h>
+#include <WiFiClient.h>
+#include <BlynkSimpleEsp32.h>
 
 /* Private enumerate/structure ---------------------------------------- */
 /* Private macros ----------------------------------------------------- */
