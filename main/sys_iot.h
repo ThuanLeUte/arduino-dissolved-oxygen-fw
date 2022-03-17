@@ -40,6 +40,7 @@ void sys_iot_update_periodic(void)
   // You can send any value at any time.
   // Please don't send more that 10 values per second.
   Blynk.virtualWrite(V0, millis() / 1000);
+  Blynk.virtualWrite(V1, millis() / 1000);
 
   Serial.print("Send data:");
   Serial.println(millis() / 1000);
