@@ -21,6 +21,7 @@
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <BlynkSimpleEsp32.h>
+#include "sys_do.h"
 
 /* Private enumerate/structure ---------------------------------------- */
 /* Private macros ----------------------------------------------------- */
@@ -37,13 +38,16 @@ char pass[] = "Khongcomatkhau";
 /* Function definitions ----------------------------------------------- */
 void sys_iot_update_periodic(void)
 {
+  sys_do_data_t do_data = { 0 };
+
+  sys_do_read_data(&do_data);
+
   // You can send any value at any time.
   // Please don't send more that 10 values per second.
-  Blynk.virtualWrite(V0, millis() / 1000);
-  Blynk.virtualWrite(V1, millis() / 1000);
+  Blynk.virtualWrite(V0, do_data.dissolved_oxygen);
+  Blynk.virtualWrite(V1, do_data.adc_voltage);
 
-  Serial.print("Send data:");
-  Serial.println(millis() / 1000);
+  Serial.print("Send data...");
 }
 
 void sys_iot_run(uint32_t ms)
