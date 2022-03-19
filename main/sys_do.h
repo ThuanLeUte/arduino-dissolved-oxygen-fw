@@ -12,8 +12,8 @@
 
 /* Includes ----------------------------------------------------------- */
 /* Private defines ---------------------------------------------------- */
-#define DO_PIN    (26)
-#define VREF      (4000)    // VREF (mv)
+#define DO_PIN    (33)
+#define VREF      (3300)    // VREF (mv)
 #define ADC_RES   (4095)    // ADC Resolution
 
 #define TWO_POINT_CALIBRATION (0)
