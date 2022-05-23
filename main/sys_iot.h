@@ -31,8 +31,8 @@ BlynkTimer timer;
 
 char auth[] = BLYNK_AUTH_TOKEN;
 
-char ssid[] = "A6.11";
-char pass[] = "Khongcomatkhau";
+char ssid[] = "DitMeMay";
+char pass[] = "hiepdeptraioiladeptrai";
 
 /* Private function prototypes ---------------------------------------- */
 /* Function definitions ----------------------------------------------- */
@@ -45,17 +45,12 @@ void sys_iot_update_periodic(void)
   // You can send any value at any time.
   // Please don't send more that 10 values per second.
   Blynk.virtualWrite(V0, do_data.dissolved_oxygen);
-  Blynk.virtualWrite(V1, do_data.adc_voltage);
-
-  Serial.print("Send data...");
+  Blynk.virtualWrite(V2, do_data.bat_voltage);
 }
 
 void sys_iot_run(uint32_t ms)
 {
-  Serial.begin(9600);
-
   Blynk.begin(auth, ssid, pass);
-
   timer.setInterval(ms, sys_iot_update_periodic);
 }
 
@@ -63,6 +58,11 @@ void sys_iot_poll(void)
 {
   Blynk.run();
   timer.run(); // Initiates BlynkTimer
+  
+  for (uint8_t j = 0; j < 60; j++)
+  {
+    delay(1000);
+  }
 }
 
 /* Private function definitions --------------------------------------- */

@@ -13,6 +13,7 @@
 /* Includes ----------------------------------------------------------- */
 /* Private defines ---------------------------------------------------- */
 #define DO_PIN    (33)
+#define BAT_PIN   (34)
 #define VREF      (3300)    // VREF (mv)
 #define ADC_RES   (4095)    // ADC Resolution
 
@@ -38,6 +39,9 @@ typedef struct
   uint16_t adc_raw;
   uint16_t adc_voltage;
   uint16_t dissolved_oxygen;
+  
+  uint16_t bat_adc_raw;
+  uint16_t bat_voltage;
 }
 sys_do_data_t;
 
@@ -59,14 +63,26 @@ int16_t sys_do_read_do(uint32_t voltage_mv, uint8_t temperature_c)
 void sys_do_read_data(sys_do_data_t *do_data)
 {
   do_data->temperature      = (uint8_t)CAL1_T;
-  do_data->adc_raw          = analogRead(DO_PIN);
+  do_data->adc_raw          = 0;
+
+  for(uint8_t i = 0; i < 10; i++)
+  {
+    do_data->adc_raw = do_data->adc_raw + analogRead(DO_PIN);
+  }
+  
+  do_data->adc_raw          = do_data->adc_raw / 10;
   do_data->adc_voltage      = uint32_t(VREF) * do_data->adc_raw / ADC_RES;
   do_data->dissolved_oxygen = sys_do_read_do(do_data->adc_raw, do_data->temperature);
 
-  Serial.print("Temperature:\t" + String(do_data->temperature) + "\t");
-  Serial.print("ADC RAW:\t" + String(do_data->adc_raw) + "\t");
-  Serial.print("ADC Voltage:\t" + String(do_data->adc_raw) + "\t");
-  Serial.println("DO:\t" + String(do_data->dissolved_oxygen) + "\t");
+  // Battery voltage
+  do_data->bat_adc_raw      = 0;
+  for(uint8_t i = 0; i < 10; i++)
+  {
+    do_data->bat_adc_raw = do_data->bat_adc_raw + analogRead(BAT_PIN);
+  }
+
+  do_data->bat_adc_raw      = do_data->bat_adc_raw / 10;
+  do_data->bat_voltage      = (uint32_t(VREF) * do_data->bat_adc_raw * 2 / ADC_RES) + 200;
 }
 
 /* Private function definitions --------------------------------------- */

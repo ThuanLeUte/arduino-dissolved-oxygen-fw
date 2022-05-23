@@ -24,7 +24,7 @@
 /* Function definitions ----------------------------------------------- */
 void setup()
 {
-  sys_iot_run(1000);
+  sys_iot_run(60000);
 }
 
 void loop()
